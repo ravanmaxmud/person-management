@@ -32,7 +32,9 @@ namespace PersonManagement
 
                     Console.Write("Please add person's FIN code :");
                     string fin = Console.ReadLine();
-                    AddNewPersons(name, lastName, fin);
+                    Person person = AddNewPersons(name, lastName, fin);
+                    
+                    Console.WriteLine(person.GetInfo() + " - Added to system.");
                 }
                 else if (command == "/remove-person")
                 {
@@ -63,12 +65,11 @@ namespace PersonManagement
             }
         }
 
-        public static void AddNewPersons(string name,string lastName,string fin)
+        public static Person AddNewPersons(string name,string lastName,string fin)
         {
             Person person = new Person(name, lastName, fin);
             persons.Add(person);
-
-            Console.WriteLine(person.GetInfo() + " - Added to system.");
+            return person;   
         }
         public static void RemovePerson(string fin)
         {
@@ -100,15 +101,19 @@ namespace PersonManagement
 
     class Person
     {
+        public static uint _idCounter = 1;
+        public  uint Id { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
         public string FIN { get; set; }
 
         public Person(string name, string lastName, string fin)
         {
+            Id = _idCounter;
             Name = name;
             LastName = lastName;
             FIN = fin;
+            _idCounter++;
         }
 
         public string GetFullName()
@@ -118,7 +123,7 @@ namespace PersonManagement
 
         public string GetInfo()
         {
-            return Name + " " + LastName + " " + FIN;
+            return Id+" "+ Name + " " + LastName + " " + FIN;
         }
     }
 }
