@@ -5,7 +5,7 @@ namespace PersonManagement
 {
     internal class Program
     {
-           public static List<Person> persons = new List<Person>();
+        public static List<Person> persons = new List<Person>();
         static void Main(string[] args)
         {
 
@@ -14,6 +14,7 @@ namespace PersonManagement
             Console.WriteLine("/remove-person");
             Console.WriteLine("/show-persons");
             Console.WriteLine("/remove-all-persons");
+            Console.WriteLine("/remove-person-for-Id");
             Console.WriteLine("/exit");
 
             while (true)
@@ -57,6 +58,12 @@ namespace PersonManagement
                     Console.WriteLine("Thanks for using our application!");
                     break;
                 }
+                else if (command == "/remove-person-for-Id")
+                {
+                    Console.Write("To remove person, please enter his/her Id : ");
+                    uint id = Convert.ToUInt32( Console.ReadLine());
+                    RemovePersonForId(id);
+                }
                 else
                 {
                     Console.WriteLine("Command not found, please enter command from list!");
@@ -71,6 +78,7 @@ namespace PersonManagement
             persons.Add(person);
             return person;   
         }
+
         public static void RemovePerson(string fin)
         {
             for (int i = 0; i < persons.Count; i++)
@@ -83,6 +91,7 @@ namespace PersonManagement
                 }
             }
         }
+
         public static void ShowPersons()
         {
             foreach (Person person in persons)
@@ -90,6 +99,7 @@ namespace PersonManagement
                 Console.WriteLine(person.GetInfo());
             }
         }
+
         public static void RemoveAllPersons()
         {
             for (int i = 0; i <= persons.Count; i++)
@@ -97,12 +107,27 @@ namespace PersonManagement
                 persons.RemoveAt(0);
             }
         }
+
+        public static void RemovePersonForId(uint id)
+        {
+            for (int i = 0; i < persons.Count; i++)
+            {
+                if (persons[i].Id == id)
+                {
+                    Console.WriteLine(persons[i].GetInfo());
+                    persons.RemoveAt(i);
+                    Console.WriteLine("Person removed successfully");
+                }
+            }
+        }
+
+
     }
 
     class Person
     {
         public static uint _idCounter = 1;
-        public  uint Id { get; set; }
+        public  uint Id { get; private set; }
         public string Name { get; set; }
         public string LastName { get; set; }
         public string FIN { get; set; }
