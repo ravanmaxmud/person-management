@@ -18,6 +18,7 @@ namespace PersonManagement
             while (true)
             {
                 Console.WriteLine();
+
                 Console.Write("Enter command : ");
                 string command = Console.ReadLine();
 
